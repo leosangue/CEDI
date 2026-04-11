@@ -1,7 +1,11 @@
 #pragma once
 #include <string>
+
 class Usuario;
+
 using namespace std;
+
+
 class Publicacion{
     private:
         int id;    

@@ -27,10 +27,11 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
         cout << "3. Crear publicacion" << endl;
         cout << "4. Entrar a perfil de amigo" << endl;
         cout << "5. Agregar un nuevo amigo" << endl;
-        cout << "6. Salir" << endl;
+        cout << "6. Ver usuarios bloqueados" << endl;
+        cout << "7. Bloquear usuario" << endl;
+        cout << "8. Salir" << endl;
         cout << "Selecciona una opcion: ";
         int opcionUsuario = leerEntero();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); //limpia el buffer de entrada para evitar problemas con getline despues de leer un numero
         switch (opcionUsuario) {
             //ver amigos
             case 1:
@@ -53,7 +54,7 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
                 usuarioActual->mostrarAmigos();
                 cout << "Ingresa el ID del amigo: ";
                 int idAmigo = leerEntero();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                
                 Usuario* amigoSeleccionado = usuarioActual->getAmigo(idAmigo);
                 mostrarMenuUsuario(red, amigoSeleccionado);
                 break;
@@ -64,7 +65,7 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
                 red.mostrarUsuarios();
                 cout << "Ingresa el ID del usuario a agregar como amigo: ";
                 int idNuevoAmigo = leerEntero();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
                 Usuario* nuevoAmigo = red.getUsuario(idNuevoAmigo);
                 if (nuevoAmigo == nullptr) {
                     break;
@@ -88,8 +89,43 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
                 cout << "Amigo agregado correctamente." << endl;
                 break;
             }
-            //regresar al menu principal
+            //ver usuarios bloqueados
             case 6:
+                cout << "\n===== USUARIOS BLOQUEADOS =====" << endl;
+                usuarioActual->mostrarBloqueados();
+                break;
+            //bloquear usuario
+            case 7: {
+                cout << "\n===== USUARIOS DISPONIBLES PARA BLOQUEAR =====" << endl;
+                red.mostrarUsuarios();
+                cout << "Ingresa el ID del usuario a bloquear: ";
+                int idBloquear = leerEntero();
+                
+                Usuario* usuarioBloquear = red.getUsuario(idBloquear);
+                if (usuarioBloquear == nullptr) {
+                    break;
+                }
+                if (usuarioBloquear == usuarioActual) {
+                    cout << "No puedes bloquearte a ti mismo." << endl;
+                    break;
+                }
+                bool yaBloqueado = false;
+                for (size_t i = 0; i < usuarioActual->usuariosBloqueados.size(); i++) {
+                    if (usuarioActual->usuariosBloqueados[i] != nullptr && usuarioActual->usuariosBloqueados[i]->getID() == idBloquear) {
+                        yaBloqueado = true;
+                        break;
+                    }
+                }
+                if (yaBloqueado) {
+                    cout << "Ese usuario ya está bloqueado." << endl;
+                    break;
+                }
+                usuarioActual->agregarBloqueado(usuarioBloquear);
+                cout << "Usuario bloqueado correctamente." << endl;
+                break;
+            }
+            //regresar al menu principal
+            case 8:
                 return;
             default:
                 cout << "Opcion invalida." << endl;
@@ -104,7 +140,9 @@ int main()
     //crear usuarios (solamente los punteros)
     Usuario* leo = new Usuario("Leo", 67, "Mexico");
     Usuario* mariano = new Usuario("Mariano", 20, "Mexico");
+    Usuario* carlos = new Usuario("Carlos", 25, "Mexico");
     leo->agregarAmigo(mariano);
+    leo->agregarBloqueado(carlos);
     //crear publicaciones  (solamente los punteros) y agregarlas a los usuarios 
     Publicacion* p1 = new Publicacion(leo, "2026-03-25", "Primera Publicacion");
     Publicacion* p2 = new Publicacion(mariano, "2026-03-25", "Segunda Publicacion");
@@ -113,6 +151,7 @@ int main()
     //agregar los usuarios a la red social
     red.agregarUsuario(leo);
     red.agregarUsuario(mariano);
+    red.agregarUsuario(carlos);
     //ciclo principal del programa
     while (true) {
         cout << "\n===== BIENVENIDO A " << red.nombre << " =====" << endl;
@@ -123,7 +162,7 @@ int main()
         cout << "5. Salir" << endl;
         cout << "Selecciona una opcion: ";
         int opcionPrincipal = leerEntero();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
         switch (opcionPrincipal) {
             case 1:
                 cout << "\n===== LISTA DE USUARIOS =====" << endl;
@@ -137,7 +176,7 @@ int main()
             case 3: {
                 cout << "Ingresa el ID del usuario: ";
                 int idUsuario = leerEntero();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
                 Usuario* usuario = red.getUsuario(idUsuario);
                 if (usuario != nullptr) {
                     mostrarMenuUsuario(red, usuario);
@@ -149,11 +188,13 @@ int main()
                 string nombre;
                 int edad;
                 string nacionalidad;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar buffer
                 cout << "Nombre: ";
                 getline(cin, nombre);
                 cout << "Edad: ";
                 edad = leerEntero();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar buffer
                 cout << "Nacionalidad: ";
                 getline(cin, nacionalidad);
                 Usuario* nuevoUsuario = new Usuario(nombre, edad, nacionalidad);
