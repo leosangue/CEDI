@@ -75,7 +75,7 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
                     break;
                 }
                 bool yaEsAmigo = false;
-                for (size_t i = 0; i < usuarioActual->amigos.size(); i++) {
+                for (int i = 0; i < usuarioActual->amigos.size(); i++) {
                     if (usuarioActual->amigos[i] != nullptr && usuarioActual->amigos[i]->getID() == idNuevoAmigo) {
                         yaEsAmigo = true;
                         break;
@@ -110,7 +110,7 @@ void mostrarMenuUsuario(RedSocial& red, Usuario* usuarioActual) {
                     break;
                 }
                 bool yaBloqueado = false;
-                for (size_t i = 0; i < usuarioActual->usuariosBloqueados.size(); i++) {
+                for (int i = 0; i < usuarioActual->usuariosBloqueados.size(); i++) {
                     if (usuarioActual->usuariosBloqueados[i] != nullptr && usuarioActual->usuariosBloqueados[i]->getID() == idBloquear) {
                         yaBloqueado = true;
                         break;

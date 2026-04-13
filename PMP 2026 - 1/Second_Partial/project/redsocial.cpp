@@ -24,7 +24,7 @@ RedSocial::RedSocial(string n, vector<Usuario*> u)
 RedSocial::~RedSocial() {
     borrarPublicaciones();
 
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         delete usuarios[i];
     }
     usuarios.clear();
@@ -44,7 +44,7 @@ void RedSocial::agregarUsuario(Usuario* a) {
 
 //Mostrar todos los usuarios de la red social
 void RedSocial::mostrarUsuarios() {
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         if (usuarios[i] != nullptr) {
             usuarios[i]->mostrar();
         }
@@ -56,7 +56,7 @@ void RedSocial::mostrarUsuarios() {
 
 //Mostrar todas las publicaciones de la red social
 void RedSocial::mostrarPublicaciones() {
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         if (usuarios[i] != nullptr) {
             usuarios[i]->mostrarPublicaciones();
         }
@@ -66,7 +66,7 @@ void RedSocial::mostrarPublicaciones() {
 
 //obtener un puntero Usuario por su ID
 Usuario* RedSocial::getUsuario(int id) {
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         if (usuarios[i] != nullptr && usuarios[i]->getID() == id) {
             return usuarios[i];
         }
@@ -77,7 +77,7 @@ Usuario* RedSocial::getUsuario(int id) {
 }
 //obtener un puntero Usuario por su nombre
 Usuario* RedSocial::getUsuario(string nombreBuscado) {
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         if (usuarios[i] != nullptr && usuarios[i]->nombre == nombreBuscado) {
             return usuarios[i];
         }
@@ -90,9 +90,9 @@ Usuario* RedSocial::getUsuario(string nombreBuscado) {
 
 //Funcion extra: Borra todas las publicaciones de la red social
 void RedSocial::borrarPublicaciones() {
-    for (size_t i = 0; i < usuarios.size(); i++) {
+    for (int i = 0; i < usuarios.size(); i++) {
         if (usuarios[i] != nullptr) {
-            for (size_t j = 0; j < usuarios[i]->publicaciones.size(); j++) {
+            for (int j = 0; j < usuarios[i]->publicaciones.size(); j++) {
                 delete usuarios[i]->publicaciones[j];
             }
             usuarios[i]->publicaciones.clear();

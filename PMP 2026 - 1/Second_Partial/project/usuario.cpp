@@ -35,7 +35,7 @@ int nextUsuarioId = 1;
         amigos.push_back(a);
         a->amigos.push_back(this);
         // Remover de bloqueados si está ahí
-        for (size_t i = 0; i < usuariosBloqueados.size(); ++i) {
+        for (int i = 0; i < usuariosBloqueados.size(); ++i) {
             if (usuariosBloqueados[i] == a) {
                 usuariosBloqueados.erase(usuariosBloqueados.begin() + i);
                 break;
@@ -57,13 +57,13 @@ int nextUsuarioId = 1;
 
     //muestra todos los amigos del usuario
     void Usuario::mostrarAmigos(){
-    for(size_t i = 0; i < amigos.size(); i++){
+    for(int i = 0; i < amigos.size(); i++){
         cout << "- " << amigos[i]->nombre << " (ID: " << amigos[i]->getID() << ")" << endl;
     }
     }
     //Muestra todas las publicaciones del usuario
     void Usuario::mostrarPublicaciones(){
-   for(size_t i = 0; i < publicaciones.size(); i++){
+   for(int i = 0; i < publicaciones.size(); i++){
         publicaciones[i]->mostrarPublicacion();
     }
     }
@@ -83,7 +83,7 @@ int nextUsuarioId = 1;
     
     //buscar amigo de usuario por ID
     Usuario* Usuario::getAmigo(int idBuscado){
-        for (size_t i = 0; i < amigos.size(); i++) {
+        for (int i = 0; i < amigos.size(); i++) {
             if (amigos[i] != nullptr && amigos[i]->getID() == idBuscado) {
                 return amigos[i];
             }
@@ -94,7 +94,7 @@ int nextUsuarioId = 1;
     }
     //buscar amigo de usuario por NOMBRE
     Usuario* Usuario::getAmigo(string nombreBuscado){
-        for (size_t i = 0; i < amigos.size(); i++) {
+        for (int i = 0; i < amigos.size(); i++) {
             if (amigos[i] != nullptr && amigos[i]->nombre == nombreBuscado) {
                 return amigos[i];
             }
@@ -110,7 +110,7 @@ int nextUsuarioId = 1;
             cout << "No tienes usuarios bloqueados." << endl;
             return;
         }
-        for(size_t i = 0; i < usuariosBloqueados.size(); i++){
+        for(int i = 0; i < usuariosBloqueados.size(); i++){
             cout << "- " << usuariosBloqueados[i]->nombre << " (ID: " << usuariosBloqueados[i]->getID() << ")" << endl;
         }
     }
@@ -124,7 +124,7 @@ int nextUsuarioId = 1;
         }
         usuariosBloqueados.push_back(u);
         // Quizás remover de amigos si es amigo
-        for (size_t i = 0; i < amigos.size(); ++i) {
+        for (int i = 0; i < amigos.size(); ++i) {
             if (amigos[i] == u) {
                 amigos.erase(amigos.begin() + i);
                 break;
